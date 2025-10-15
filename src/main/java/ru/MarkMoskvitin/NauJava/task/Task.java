@@ -22,9 +22,9 @@ public class Task
     {
         return description;
     }
-    public void setDescription(String login)
+    public void setDescription(String decscr)
     {
-        this.description = login;
+        this.description = decscr;
     }
     public Date getFinish() {
         return finish;
