@@ -5,13 +5,10 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.MarkMoskvitin.NauJava.service.TaskService;
-import ru.MarkMoskvitin.NauJava.task.Task;
+import ru.MarkMoskvitin.NauJava.entity.Task;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
@@ -23,6 +20,7 @@ public class Commands {
             this.taskService = taskService;
         }
 
+
          public void processCommands(String input)
          {
             String[] cmd = input.split(" ");
@@ -30,11 +28,12 @@ public class Commands {
             {
                 case "create" ->
                 {
-                    if (cmd.length ==4) {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M");
+                    if (cmd.length==5) {
+                        final String pattern = "dd/MM/yyyy";
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
                         LocalDate date= LocalDate.parse(cmd[3], formatter);
                         taskService.createTask(Long.valueOf(cmd[1]), cmd[2], "not done", date, cmd[4].toLowerCase() == "yes");
-                        System.out.println("Пользователь успешно добавлен..");
+                        System.out.println("Задача успешно добавлена.");
                     }
                     else
                         System.out.println("Ошибка в команде");
@@ -49,10 +48,15 @@ public class Commands {
                 case "find" -> {
                     if (cmd.length == 2) {
                         Task t = taskService.findById(Long.valueOf(cmd[1]));
-                        String pattern = "d/M";
-                        DateFormat df = new SimpleDateFormat(pattern);
-                        System.out.printf("Цель: %s, успеть до: %s, уведомления: %s", t.getDescription(), df.format(t.getFinish()), t.isHasPush() ? "Да" : "Нет");
-                    }
+                        if (t == null) {
+                            System.out.println("Задача не найдена");
+                        }
+                        else  {
+                            final String pattern = "dd/MM/yyyy";
+                            DateTimeFormatter df =  DateTimeFormatter.ofPattern(pattern);
+                            System.out.printf("Цель: %s, успеть до: %s, уведомления: %s\n", t.getDescription(), df.format(t.getFinish()), t.isHasPush() ? "Да" : "Нет");
+                        }
+                       }
                     else
                         System.out.println("Ошибка в команде");
 

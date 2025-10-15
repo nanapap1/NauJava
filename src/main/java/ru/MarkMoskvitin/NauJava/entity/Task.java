@@ -1,9 +1,6 @@
-package ru.MarkMoskvitin.NauJava.task;
-
-import org.springframework.cglib.core.Local;
+package ru.MarkMoskvitin.NauJava.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Task
 {

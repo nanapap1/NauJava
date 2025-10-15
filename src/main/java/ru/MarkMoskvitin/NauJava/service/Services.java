@@ -1,9 +1,6 @@
 package ru.MarkMoskvitin.NauJava.service;
 
-import ru.MarkMoskvitin.NauJava.task.Task;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public interface Services<T>
 {

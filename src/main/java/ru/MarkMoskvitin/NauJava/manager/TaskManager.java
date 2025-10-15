@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ru.MarkMoskvitin.NauJava.task.*;
+import ru.MarkMoskvitin.NauJava.entity.*;
+
+import java.util.Objects;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
@@ -27,7 +29,7 @@ public class TaskManager implements TaskCRUD<Task> {
     public Task read(Long id)
     {
         for(Task t : this.tasks) {
-            if (t.getId().equals(id)) {
+            if (Objects.equals(t.getId(), id)) {
                 return t;
             }
         }

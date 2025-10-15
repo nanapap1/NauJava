@@ -1,25 +1,29 @@
 package ru.MarkMoskvitin.NauJava;
 
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import ru.MarkMoskvitin.NauJava.commands.Commands;
-import ru.MarkMoskvitin.NauJava.task.*;
 
 import java.util.Scanner;
 
 @Configuration
 public class Config
 {
-    @Bean
-    @Scope(value = BeanDefinition.SCOPE_SINGLETON)
-    public TaskList tasksContainer()
-    {
-        return new TaskList();
+    @Value("${app.name}")
+    private String name;
+    @Value("${app.version}")
+    private String version;
+
+    @PostConstruct
+    private void postConstruct() {
+        System.out.println("Название приложения: " + this.name);
+        System.out.println("Версия приложения: " + this.version);
+
     }
 
     @Autowired
