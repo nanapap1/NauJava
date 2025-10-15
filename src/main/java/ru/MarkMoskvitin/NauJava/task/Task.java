@@ -1,5 +1,8 @@
 package ru.MarkMoskvitin.NauJava.task;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Task
@@ -7,7 +10,7 @@ public class Task
     private Long id;
     private String description;
     private String status;
-    private Date finish;
+    private LocalDate finish;
     private boolean hasPush;
 
     public Long getId()
@@ -26,11 +29,11 @@ public class Task
     {
         this.description = decscr;
     }
-    public Date getFinish() {
+    public LocalDate getFinish() {
         return finish;
     }
 
-    public void setFinish(Date finish) {
+    public void setFinish(LocalDate finish) {
         this.finish = finish;
     }
 

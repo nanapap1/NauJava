@@ -1,0 +1,72 @@
+package ru.MarkMoskvitin.NauJava.commands;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import ru.MarkMoskvitin.NauJava.service.TaskService;
+import ru.MarkMoskvitin.NauJava.task.Task;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+@Component
+@Scope(value = BeanDefinition.SCOPE_SINGLETON)
+public class Commands {
+        private final TaskService taskService;
+        @Autowired
+        public Commands(TaskService taskService)
+        {
+            this.taskService = taskService;
+        }
+
+         public void processCommands(String input)
+         {
+            String[] cmd = input.split(" ");
+            switch (cmd[0])
+            {
+                case "create" ->
+                {
+                    if (cmd.length ==4) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M");
+                        LocalDate date= LocalDate.parse(cmd[3], formatter);
+                        taskService.createTask(Long.valueOf(cmd[1]), cmd[2], "not done", date, cmd[4].toLowerCase() == "yes");
+                        System.out.println("Пользователь успешно добавлен..");
+                    }
+                    else
+                        System.out.println("Ошибка в команде");
+                }
+                case "delete" ->
+                {
+                    if (cmd.length ==2)
+                        taskService.deleteById(Long.valueOf(cmd[1]));
+                    else
+                        System.out.println("Ошибка в команде");
+                }
+                case "find" -> {
+                    if (cmd.length == 2) {
+                        Task t = taskService.findById(Long.valueOf(cmd[1]));
+                        String pattern = "d/M";
+                        DateFormat df = new SimpleDateFormat(pattern);
+                        System.out.printf("Цель: %s, успеть до: %s, уведомления: %s", t.getDescription(), df.format(t.getFinish()), t.isHasPush() ? "Да" : "Нет");
+                    }
+                    else
+                        System.out.println("Ошибка в команде");
+
+                }
+                case "descr" -> {
+                    if (cmd.length == 3) {
+                        taskService.updateDescription(Long.valueOf(cmd[1]),cmd[2]);
+                    }
+                    else
+                        System.out.println("Ошибка в команде");
+                }
+                default -> System.out.println("Введена неизвестная команда... ");
+            }
+
+        }
+    }
+

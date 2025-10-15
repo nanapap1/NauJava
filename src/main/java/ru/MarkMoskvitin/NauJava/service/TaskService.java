@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.MarkMoskvitin.NauJava.task.*;
 import ru.MarkMoskvitin.NauJava.manager.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -20,7 +21,7 @@ public class TaskService implements Services<Task> {
             this.taskManager = taskManager;
         }
         @Override
-        public void createTask(Long id, String description, String status, Date end, boolean hasPush)
+        public void createTask(Long id, String description, String status, LocalDate end, boolean hasPush)
         {
             Task t = new Task();
             t.setId(id);
