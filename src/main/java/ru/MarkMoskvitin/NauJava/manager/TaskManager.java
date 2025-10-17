@@ -5,17 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ru.MarkMoskvitin.NauJava.entity.*;
+import ru.MarkMoskvitin.NauJava.entity.Task;
 
+import java.util.List;
 import java.util.Objects;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
 public class TaskManager implements TaskCRUD<Task> {
-    private final TaskList tasks;
+    private final List<Task> tasks;
 
     @Autowired
-    public TaskManager(TaskList tasks)
+    public TaskManager(List<Task> tasks)
     {
         this.tasks = tasks;
     }

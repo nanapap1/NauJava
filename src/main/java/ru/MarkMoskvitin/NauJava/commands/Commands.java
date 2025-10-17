@@ -32,7 +32,7 @@ public class Commands {
                         final String pattern = "dd/MM/yyyy";
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
                         LocalDate date= LocalDate.parse(cmd[3], formatter);
-                        taskService.createTask(Long.valueOf(cmd[1]), cmd[2], "not done", date, cmd[4].toLowerCase() == "yes");
+                        taskService.createTask(Long.valueOf(cmd[1]), cmd[2], "not done", date, cmd[4].equalsIgnoreCase("yes"));
                         System.out.println("Задача успешно добавлена.");
                     }
                     else
