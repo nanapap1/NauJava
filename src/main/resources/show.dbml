@@ -1,0 +1,46 @@
+Table users {
+  id integer [primary key]
+  username string
+  email string
+  password string
+}
+
+Table tasks {
+  id integer [primary key]
+  title string
+  body string
+  link string
+  user_id integer [not null]
+  end string
+  push integer
+  subtask list_integer
+  group integer [not null]
+}
+
+Table subtasks {
+    id integer [primary key]
+    title string
+    body string
+    link string
+}
+
+Table pushes {
+    id integer [primary key]
+    name string
+    minutes integer
+    hours integer
+    days integer
+    sound boolean
+}
+
+Table groups {
+    id integer [primary key]
+    name string
+    description string
+    colour string
+}
+
+Ref user_tasks: tasks.user_id > users.id // many-to-one
+Ref task_status: tasks.subtask <> subtasks.id // many-to-many
+Ref task_status: tasks.push > pushes.id // many-to-one
+Ref task_status: tasks.group > groups.id // many-to-one
