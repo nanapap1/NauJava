@@ -12,9 +12,9 @@ Table tasks {
   link string
   user_id integer [not null]
   end string
-  push integer
-  subtask list_integer
-  group integer [not null]
+  push_id integer [not null]
+  subtasks_id list_integer [not null]
+  group_id integer [not null]
 }
 
 Table subtasks {
@@ -41,6 +41,6 @@ Table groups {
 }
 
 Ref user_tasks: tasks.user_id > users.id // many-to-one
-Ref task_status: tasks.subtask <> subtasks.id // many-to-many
-Ref task_status: tasks.push > pushes.id // many-to-one
-Ref task_status: tasks.group > groups.id // many-to-one
+Ref task_sub: tasks.subtasks_id <> subtasks.id // many-to-many
+Ref task_push: tasks.push_id > pushes.id // many-to-one
+Ref task_group: tasks.group_id > groups.id // many-to-one
