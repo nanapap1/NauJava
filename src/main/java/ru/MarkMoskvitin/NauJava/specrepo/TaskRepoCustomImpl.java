@@ -12,6 +12,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import ru.MarkMoskvitin.NauJava.entity.Group;
 import ru.MarkMoskvitin.NauJava.entity.Task;
+import ru.MarkMoskvitin.NauJava.entity.User;
 
 @Repository
 public class TaskRepoCustomImpl implements TaskRepositoryCustom{
@@ -47,5 +48,17 @@ public class TaskRepoCustomImpl implements TaskRepositoryCustom{
             criteriaQuery.select(taskRoot).where(titlePredicate);
             return entityManager.createQuery(criteriaQuery).getResultList();
         }
+
+    @Override
+    public List<Task> findByUser(String username)
+    {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Task> criteriaQuery = criteriaBuilder.createQuery(Task.class);
+        Root<Task> taskRoot = criteriaQuery.from(Task.class);
+        Join<Task, User> user = taskRoot.join("user", JoinType.INNER);
+        Predicate titlePredicate = criteriaBuilder.equal(user.get("id"), username);
+        criteriaQuery.select(taskRoot).where(titlePredicate);
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
 }
 
