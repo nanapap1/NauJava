@@ -20,15 +20,12 @@ public class TaskService implements Services<Task> {
             this.taskManager = taskManager;
         }
         @Override
-        public void createTask(Long id, String description, String status, LocalDate end, boolean hasPush)
+        public void createTask(Long id, String description)
         {
             Task t = new Task();
             System.out.println(id);
             t.setId(id);
-            t.setDescription(description);
-            t.setStatus(status);
-            t.setFinish(end);
-            t.setHasPush(hasPush);
+            t.setBody(description);
             taskManager.create(t);
 
         }
@@ -55,7 +52,7 @@ public class TaskService implements Services<Task> {
                 System.out.println("Задача не найдена");
             }
             else
-                t.setDescription(descr);
+                t.setBody(descr);
         }
 
 

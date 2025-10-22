@@ -37,12 +37,6 @@ public class TaskManager implements TaskCRUD<Task> {
         return null;
     }
 
-    @Override
-    public void updateStatus(Long id,String status) {
-       Task task = this.read(id);
-       if (task!=null)
-          task.setStatus(status);
-    }
 
     @Override
     public void delete(Long id)

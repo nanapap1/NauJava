@@ -25,13 +25,13 @@ public class TaskRepoCustomImpl implements TaskRepositoryCustom{
     }
 
     @Override
-    public List<Task> findByTitleOrEnd(String title, String end)
+    public List<Task> findByTitleOrFinish(String title, String finish)
         {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Task> criteriaQuery = criteriaBuilder.createQuery(Task.class);
             Root<Task> taskRoot = criteriaQuery.from(Task.class);
             Predicate titlePredicate = criteriaBuilder.equal(taskRoot.get("title"), title);
-            Predicate endPredicate = criteriaBuilder.equal(taskRoot.get("end"), end);
+            Predicate endPredicate = criteriaBuilder.equal(taskRoot.get("finish"), finish);
             Predicate allPredicate = criteriaBuilder.or(titlePredicate,endPredicate);
             criteriaQuery.select(taskRoot).where(allPredicate);
             return entityManager.createQuery(criteriaQuery).getResultList();
@@ -44,7 +44,7 @@ public class TaskRepoCustomImpl implements TaskRepositoryCustom{
             CriteriaQuery<Task> criteriaQuery = criteriaBuilder.createQuery(Task.class);
             Root<Task> taskRoot = criteriaQuery.from(Task.class);
             Join<Task, Group> group = taskRoot.join("group", JoinType.INNER);
-            Predicate titlePredicate = criteriaBuilder.equal(group.get("title"), groupTitle);
+            Predicate titlePredicate = criteriaBuilder.equal(group.get("name"), groupTitle);
             criteriaQuery.select(taskRoot).where(titlePredicate);
             return entityManager.createQuery(criteriaQuery).getResultList();
         }
@@ -56,7 +56,7 @@ public class TaskRepoCustomImpl implements TaskRepositoryCustom{
         CriteriaQuery<Task> criteriaQuery = criteriaBuilder.createQuery(Task.class);
         Root<Task> taskRoot = criteriaQuery.from(Task.class);
         Join<Task, User> user = taskRoot.join("user", JoinType.INNER);
-        Predicate titlePredicate = criteriaBuilder.equal(user.get("id"), username);
+        Predicate titlePredicate = criteriaBuilder.equal(user.get("username"), username);
         criteriaQuery.select(taskRoot).where(titlePredicate);
         return entityManager.createQuery(criteriaQuery).getResultList();
     }

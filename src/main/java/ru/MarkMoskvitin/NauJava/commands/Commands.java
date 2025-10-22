@@ -32,7 +32,7 @@ public class Commands {
                         final String pattern = "dd/MM/yyyy";
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
                         LocalDate date= LocalDate.parse(cmd[3], formatter);
-                        taskService.createTask(Long.valueOf(cmd[1]), cmd[2], "not done", date, cmd[4].equalsIgnoreCase("yes"));
+                        taskService.createTask(Long.valueOf(cmd[1]), cmd[2]);
                         System.out.println("Задача успешно добавлена.");
                     }
                     else
@@ -54,7 +54,7 @@ public class Commands {
                         else  {
                             final String pattern = "dd/MM/yyyy";
                             DateTimeFormatter df =  DateTimeFormatter.ofPattern(pattern);
-                            System.out.printf("Цель: %s, успеть до: %s, уведомления: %s\n", t.getDescription(), df.format(t.getFinish()), t.isHasPush() ? "Да" : "Нет");
+                            System.out.printf("Цель: %s, успеть до: %s, уведомления: %s\n", t.getBody());
                         }
                        }
                     else

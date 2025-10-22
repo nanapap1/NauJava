@@ -28,7 +28,7 @@ public class Config
 
     @Autowired
     private Commands commandProcessor;
-    @Bean
+    /*@Bean
     public CommandLineRunner commandScanner()
     {
         return args ->
@@ -49,5 +49,5 @@ public class Config
                 }
             }
         };
-    }
+    }*/
 }

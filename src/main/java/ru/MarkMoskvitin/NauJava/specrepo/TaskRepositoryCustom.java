@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TaskRepositoryCustom {
 
-    List<Task> findByTitleOrEnd(String title, String end);
+    List<Task> findByTitleOrFinish(String title, String end);
     List<Task> findByGroup(String groupTitle);
     List<Task> findByUser(String username);
 }

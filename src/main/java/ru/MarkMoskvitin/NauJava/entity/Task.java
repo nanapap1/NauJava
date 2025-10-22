@@ -19,18 +19,14 @@ public class Task
     @Column
     private String link;
     @Column
-    private String end;
+    private String finish;
     @ManyToOne
-    @Column(nullable = false)
     private User user;
     @ManyToOne
-    @Column
     private Push push;
     @ManyToMany
-    @Column
     private List<Subtask> subtaskList;
     @ManyToOne
-    @Column
     private Group group;
 
     public Group getGroup() {
@@ -66,11 +62,11 @@ public class Task
     }
 
     public String getEnd() {
-        return end;
+        return finish;
     }
 
     public void setEnd(String end) {
-        this.end = end;
+        this.finish = end;
     }
 
     public String getLink() {

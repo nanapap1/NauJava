@@ -7,12 +7,12 @@ import ru.MarkMoskvitin.NauJava.entity.User;
 import java.util.List;
 
 public interface TaskRepository extends CrudRepository<Task,Long> {
-    List<Task> findByTitleOrEnd(String title,String end);
+    List<Task> findByTitleOrFinish(String title,String Finish);
 
 
-    @Query("SELECT t FROM Task t WHERE t.group = :groupTitle")
+    @Query("FROM Task WHERE group.name = :groupTitle")
     List<Task> findByGroup(String groupTitle);
 
-    @Query("SELECT t FROM Task t WHERE t.user = :username")
+    @Query("FROM Task WHERE user.username = :username")
     List<Task> findByUser(String username);
 }
