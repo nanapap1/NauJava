@@ -24,14 +24,84 @@ public class Task
     @Column(nullable = false)
     private User user;
     @ManyToOne
-    @Column(nullable = false)
+    @Column
     private Push push;
     @ManyToMany
-    @Column(nullable = false)
+    @Column
     private List<Subtask> subtaskList;
     @ManyToOne
-    @Column(nullable = false)
+    @Column
     private Group group;
 
+    public Group getGroup() {
+        return group;
+    }
 
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public List<Subtask> getSubtaskList() {
+        return subtaskList;
+    }
+
+    public void setSubtaskList(List<Subtask> subtaskList) {
+        this.subtaskList = subtaskList;
+    }
+
+    public Push getPush() {
+        return push;
+    }
+
+    public void setPush(Push push) {
+        this.push = push;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
