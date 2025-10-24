@@ -2,7 +2,6 @@ package ru.MarkMoskvitin.NauJava.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -23,9 +22,7 @@ public class Task
     @ManyToOne
     private User user;
     @ManyToOne
-    private Push push;
-    @ManyToMany
-    private List<Subtask> subtaskList;
+    private PushTemplate pushTemplate;
     @ManyToOne
     private Group group;
 
@@ -37,20 +34,13 @@ public class Task
         this.group = group;
     }
 
-    public List<Subtask> getSubtaskList() {
-        return subtaskList;
+
+    public PushTemplate getPush() {
+        return pushTemplate;
     }
 
-    public void setSubtaskList(List<Subtask> subtaskList) {
-        this.subtaskList = subtaskList;
-    }
-
-    public Push getPush() {
-        return push;
-    }
-
-    public void setPush(Push push) {
-        this.push = push;
+    public void setPush(PushTemplate pushTemplate) {
+        this.pushTemplate = pushTemplate;
     }
 
     public User getUser() {

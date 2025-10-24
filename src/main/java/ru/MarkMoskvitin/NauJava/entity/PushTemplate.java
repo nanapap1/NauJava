@@ -4,8 +4,8 @@ package ru.MarkMoskvitin.NauJava.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="pushes")
-public class Push {
+@Table(name="push_templates")
+public class PushTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,10 +13,6 @@ public class Push {
     private String name;
     @Column
     private Integer minutes;
-    @Column
-    private Integer hours;
-    @Column
-    private Integer days;
     @Column
     private boolean isSound;
 
@@ -42,22 +38,6 @@ public class Push {
 
     public void setMinutes(Integer minutes) {
         this.minutes = minutes;
-    }
-
-    public Integer getHours() {
-        return hours;
-    }
-
-    public void setHours(Integer hours) {
-        this.hours = hours;
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
     }
 
     public boolean isSound() {

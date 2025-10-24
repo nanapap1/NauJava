@@ -15,6 +15,9 @@ public class Subtask {
     @Column
     private String link;
 
+    @ManyToOne
+    private Task task;
+
     public Long getId() {
         return id;
     }
@@ -45,6 +48,15 @@ public class Subtask {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
 

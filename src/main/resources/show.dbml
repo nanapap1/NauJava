@@ -1,3 +1,4 @@
+
 Table users {
   id integer [primary key]
   username string
@@ -12,8 +13,7 @@ Table tasks {
   link string
   user_id integer [not null]
   end string
-  push_id integer [not null]
-  subtasks_id list_integer [not null]
+  push_template_id integer [not null]
   group_id integer [not null]
 }
 
@@ -22,14 +22,13 @@ Table subtasks {
     title string
     body string
     link string
+    task_id integer [not null]
 }
 
-Table pushes {
+Table pushtemplates {
     id integer [primary key]
     name string
     minutes integer
-    hours integer
-    days integer
     sound boolean
 }
 
@@ -41,6 +40,7 @@ Table groups {
 }
 
 Ref user_tasks: tasks.user_id > users.id // many-to-one
-Ref task_sub: tasks.subtasks_id <> subtasks.id // many-to-many
-Ref task_push: tasks.push_id > pushes.id // many-to-one
+Ref task_sub: tasks.id < subtasks.task_id // one-to-many
+Ref task_push: tasks.push_template_id > pushtemplates.id // many-to-one
 Ref task_group: tasks.group_id > groups.id // many-to-one
+
