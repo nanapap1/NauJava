@@ -1,0 +1,53 @@
+package ru.MarkMoskvitin.NauJava.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import ru.MarkMoskvitin.NauJava.entity.Task;
+import ru.MarkMoskvitin.NauJava.repo.TaskRepository;
+import ru.MarkMoskvitin.NauJava.service.TaskService;
+
+
+@Controller
+@RequestMapping("/custom/tasks")
+public class TaskController {
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @GetMapping("/view")
+    public ModelAndView getAllView()
+    {
+        ModelAndView model = new ModelAndView("taskList");
+        model.addObject("tasks", taskRepository.findAll());
+        return model;
+    }
+
+
+    @GetMapping("/find/user/{username}")
+    public ModelAndView findByUsernameView(@PathVariable String username)
+    {
+        ModelAndView model = new ModelAndView("taskList");
+        model.addObject("tasks", taskRepository.findByUser(username));
+        return model;
+    }
+
+    @GetMapping("/find/group/{groupTitle}")
+    public ModelAndView findByGroupView(@PathVariable String groupTitle)
+    {
+        ModelAndView model = new ModelAndView("taskList");
+        model.addObject("tasks", taskRepository.findByGroup(groupTitle));
+        return model;
+    }
+
+    @GetMapping("/find/tof/t={title}&f={finish}")
+    public ModelAndView findByTitleOrFinishView(@PathVariable String title,@PathVariable String finish)
+    {
+        ModelAndView model = new ModelAndView("taskList");
+        model.addObject("tasks", taskRepository.findByTitleOrFinish(title,finish));
+        return model;
+    }
+}

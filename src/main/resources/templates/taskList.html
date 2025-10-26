@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task List</title>
+</head>
+<body>
+<h1>Task List</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Link</th>
+        <th>Finish</th>
+        <th>UserId</th>
+        <th>PushTemplate</th>
+        <th>Group</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.getId()}"></td>
+        <td th:text="${task.getTitle()}"></td>
+        <td th:text="${task.getBody()}"></td>
+        <td th:text="${task.getLink()}"></td>
+        <td th:text="${task.getEnd()}"></td>
+        <td th:text="${task.getUser()}"></td>
+        <td th:text="${task.getPushTemplate()}"></td>
+        <td th:text="${task.getGroup()}"></td>
+    </tr>
+</table>
+</body>
+</html>
