@@ -2,6 +2,7 @@ package ru.MarkMoskvitin.NauJava.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,8 @@ public class TaskController {
     public ModelAndView getAllView()
     {
         ModelAndView model = new ModelAndView("taskList");
+        if (taskRepository.findAll().toString()==null)
+            throw new ResourceNotFoundException("Tasks not found");
         model.addObject("tasks", taskRepository.findAll());
         return model;
     }
@@ -31,6 +34,8 @@ public class TaskController {
     public ModelAndView findByUsernameView(@PathVariable String username)
     {
         ModelAndView model = new ModelAndView("taskList");
+        if (taskRepository.findByUser(username).isEmpty())
+            throw new ResourceNotFoundException("This user doesn't have any tasks");
         model.addObject("tasks", taskRepository.findByUser(username));
         return model;
     }
@@ -39,6 +44,8 @@ public class TaskController {
     public ModelAndView findByGroupView(@PathVariable String groupTitle)
     {
         ModelAndView model = new ModelAndView("taskList");
+        if (taskRepository.findByGroup(groupTitle).isEmpty())
+            throw new ResourceNotFoundException("This group doesn't have any tasks");
         model.addObject("tasks", taskRepository.findByGroup(groupTitle));
         return model;
     }
@@ -47,6 +54,8 @@ public class TaskController {
     public ModelAndView findByTitleOrFinishView(@PathVariable String title,@PathVariable String finish)
     {
         ModelAndView model = new ModelAndView("taskList");
+        if (taskRepository.findByTitleOrFinish(title,finish).isEmpty())
+            throw new ResourceNotFoundException("Tasks not found");
         model.addObject("tasks", taskRepository.findByTitleOrFinish(title,finish));
         return model;
     }
