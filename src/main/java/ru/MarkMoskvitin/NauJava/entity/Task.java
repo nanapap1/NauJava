@@ -35,11 +35,11 @@ public class Task
     }
 
 
-    public PushTemplate getPush() {
+    public PushTemplate getPushTemplate() {
         return pushTemplate;
     }
 
-    public void setPush(PushTemplate pushTemplate) {
+    public void setPushTemplate(PushTemplate pushTemplate) {
         this.pushTemplate = pushTemplate;
     }
 
