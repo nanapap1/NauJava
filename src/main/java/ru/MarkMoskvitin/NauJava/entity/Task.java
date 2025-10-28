@@ -1,53 +1,93 @@
 package ru.MarkMoskvitin.NauJava.entity;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity
+@Table(name = "tasks")
 public class Task
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description;
-    private String status;
-    private LocalDate finish;
-    private boolean hasPush;
+    @Column
+    private String title;
+    @Column
+    private String body;
+    @Column
+    private String link;
+    @Column
+    private String finish;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private PushTemplate pushTemplate;
+    @ManyToOne
+    private Group group;
 
-    public Long getId()
-    {
-        return id;
+    public Group getGroup() {
+        return group;
     }
-    public void setId(Long id)
-    {
-        this.id = id;
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
-    public String getDescription()
-    {
-        return description;
+
+
+    public PushTemplate getPushTemplate() {
+        return pushTemplate;
     }
-    public void setDescription(String decscr)
-    {
-        this.description = decscr;
+
+    public void setPushTemplate(PushTemplate pushTemplate) {
+        this.pushTemplate = pushTemplate;
     }
-    public LocalDate getFinish() {
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getEnd() {
         return finish;
     }
 
-    public void setFinish(LocalDate finish) {
-        this.finish = finish;
+    public void setEnd(String end) {
+        this.finish = end;
     }
 
-    public boolean isHasPush() {
-        return hasPush;
+    public String getLink() {
+        return link;
     }
 
-    public void setHasPush(boolean hasPush) {
-        this.hasPush = hasPush;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public String getStatus() {
-        return status;
+    public String getBody() {
+        return body;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setBody(String body) {
+        this.body = body;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

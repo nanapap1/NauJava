@@ -4,22 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ru.MarkMoskvitin.NauJava.service.TaskService;
+import ru.MarkMoskvitin.NauJava.repo.TaskRepository;
 import ru.MarkMoskvitin.NauJava.entity.Task;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
 public class Commands {
-        private final TaskService taskService;
+        private final TaskRepository taskRepository;
         @Autowired
-        public Commands(TaskService taskService)
+        public Commands(TaskRepository taskRepository)
         {
-            this.taskService = taskService;
+            this.taskRepository = taskRepository;
         }
-
 
          public void processCommands(String input)
          {
@@ -29,10 +26,11 @@ public class Commands {
                 case "create" ->
                 {
                     if (cmd.length==5) {
-                        final String pattern = "dd/MM/yyyy";
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-                        LocalDate date= LocalDate.parse(cmd[3], formatter);
-                        taskService.createTask(Long.valueOf(cmd[1]), cmd[2], "not done", date, cmd[4].equalsIgnoreCase("yes"));
+                        Task task = new Task();
+                        task.setTitle(cmd[2]);
+                        task.setBody(cmd[3]);
+                        task.setEnd(cmd[3]);
+                        taskRepository.save(task);
                         System.out.println("Задача успешно добавлена.");
                     }
                     else
@@ -41,36 +39,36 @@ public class Commands {
                 case "delete" ->
                 {
                     if (cmd.length ==2)
-                        taskService.deleteById(Long.valueOf(cmd[1]));
+                        taskRepository.deleteById(Long.valueOf(cmd[1]));
                     else
                         System.out.println("Ошибка в команде");
                 }
                 case "find" -> {
                     if (cmd.length == 2) {
-                        Task t = taskService.findById(Long.valueOf(cmd[1]));
+                        List<Task> t = taskRepository.findByUser(cmd[1]);
                         if (t == null) {
                             System.out.println("Задача не найдена");
                         }
                         else  {
-                            final String pattern = "dd/MM/yyyy";
-                            DateTimeFormatter df =  DateTimeFormatter.ofPattern(pattern);
-                            System.out.printf("Цель: %s, успеть до: %s, уведомления: %s\n", t.getDescription(), df.format(t.getFinish()), t.isHasPush() ? "Да" : "Нет");
+                            for(Task one: t)
+                                System.out.printf("Названия: %s, успеть до: %s",one.getTitle(),one.getEnd());
                         }
                        }
                     else
                         System.out.println("Ошибка в команде");
 
                 }
-                case "descr" -> {
+                case "group" -> {
                     if (cmd.length == 3) {
-                        taskService.updateDescription(Long.valueOf(cmd[1]),cmd[2]);
+                        List<Task> t= taskRepository.findByGroup(cmd[1]);
+                        for(Task one: t)
+                            System.out.printf("Названия: %s, успеть до: %s",one.getTitle(),one.getEnd());
                     }
                     else
                         System.out.println("Ошибка в команде");
                 }
                 default -> System.out.println("Введена неизвестная команда... ");
             }
-
         }
     }
 
