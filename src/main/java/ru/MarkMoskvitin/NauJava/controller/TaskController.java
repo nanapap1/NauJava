@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.MarkMoskvitin.NauJava.entity.Task;
 import ru.MarkMoskvitin.NauJava.repo.TaskRepository;
-import ru.MarkMoskvitin.NauJava.service.TaskService;
 
 
 @Controller
@@ -20,7 +18,7 @@ public class TaskController {
     private TaskRepository taskRepository;
 
     @GetMapping("/view")
-    public ModelAndView getAllView()
+    public ModelAndView getAllView() throws Exception
     {
         ModelAndView model = new ModelAndView("taskList");
         if (taskRepository.findAll().toString()==null)
@@ -31,7 +29,7 @@ public class TaskController {
 
 
     @GetMapping("/find/user/{username}")
-    public ModelAndView findByUsernameView(@PathVariable String username)
+    public ModelAndView findByUsernameView(@PathVariable String username) throws Exception
     {
         ModelAndView model = new ModelAndView("taskList");
         if (taskRepository.findByUser(username).isEmpty())
@@ -41,7 +39,7 @@ public class TaskController {
     }
 
     @GetMapping("/find/group/{groupTitle}")
-    public ModelAndView findByGroupView(@PathVariable String groupTitle)
+    public ModelAndView findByGroupView(@PathVariable String groupTitle) throws Exception
     {
         ModelAndView model = new ModelAndView("taskList");
         if (taskRepository.findByGroup(groupTitle).isEmpty())
