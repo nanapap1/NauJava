@@ -1,15 +1,11 @@
-package ru.MarkMoskvitin.NauJava;
+package ru.MarkMoskvitin.NauJava.config;
 
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.MarkMoskvitin.NauJava.commands.Commands;
-
-import java.util.Scanner;
 
 @Configuration
 public class Config
