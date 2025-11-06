@@ -1,6 +1,7 @@
 package ru.MarkMoskvitin.NauJava.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.MarkMoskvitin.NauJava.models.Role;
 
 import java.util.Set;
@@ -52,7 +53,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     public Set<Role> getRoles() {
