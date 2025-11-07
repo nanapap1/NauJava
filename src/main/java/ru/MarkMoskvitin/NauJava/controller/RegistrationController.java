@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 import ru.MarkMoskvitin.NauJava.entity.User;
-import ru.MarkMoskvitin.NauJava.repo.UserRepository;
+import ru.MarkMoskvitin.NauJava.service.UserServiceImp;
+
 @Controller
 public class RegistrationController {
     @Autowired
-    private UserRepository userRepository;
+    private UserServiceImp userService;
     @GetMapping("/register")
     public String registration()
     {
@@ -21,7 +22,7 @@ public class RegistrationController {
         public String adduser(User user, Model model){
             try
             {
-                userRepository.save(user);
+                userService.addUser(user);
                 return "redirect:/login";
             }
         catch (Exception ex) {

@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -27,13 +28,15 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final PlatformTransactionManager transactionManager;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     public UserServiceImp(TaskRepository taskRepository, UserRepository userRepository,
-                           PlatformTransactionManager transactionManager)
+                           PlatformTransactionManager transactionManager, PasswordEncoder passwordEncoder)
     {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.transactionManager = transactionManager;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public void deleteUser(String username)
@@ -61,6 +64,15 @@ public class UserServiceImp implements UserService, UserDetailsService {
         User user = userRepository.findByUsername(username);
         if (user == null) throw new UsernameNotFoundException("User not found");
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),mapRoles(user.getRoles()));
+    }
+
+    @Override
+    public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Set<Role> roles = new java.util.HashSet<>();
+        roles.add(Role.USER);
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 
     private Collection<? extends GrantedAuthority> mapRoles(Set<Role> roles){

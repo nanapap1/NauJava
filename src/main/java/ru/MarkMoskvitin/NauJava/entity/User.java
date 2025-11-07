@@ -53,7 +53,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password;
     }
 
     public Set<Role> getRoles() {
