@@ -1,4 +1,4 @@
-package ru.MarkMoskvitin.NauJava;
+package ru.MarkMoskvitin.NauJava.config;
 
 
 import org.springframework.beans.factory.config.BeanDefinition;
