@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Report Ready</title>
+</head>
+<body>
+    <h2>Report</h2>
+    <ul>
+        <li><strong>Total Users:</strong> <span th:text="${report.getContent()}"></span></li>
+        <li><strong>Time to fetch users:</strong> <span th:text="${report.getThread1Time()} + ' ms'"></span></li>
+        <li><strong>Time to fetch tasks:</strong> <span th:text="${report.getThread2Time()} + ' ms'"></span></li>
+        <li><strong>Total report generation time:</strong> <span th:text="${report.getExecutionTime()} + ' ms'"></span></li>
+    </ul>
+
+    <h2>Subtask List</h2>
+        <span th:each="task, stat : ${subtask}">
+        <span th:text="${task}"></span>
+        <br th:if="${!stat.last}" />
+</span>
+</body>
+</html>
