@@ -64,4 +64,19 @@ public class GroupTest {
                 .extract().as(Group.class);
         assertEquals(group.getName(), retrievedGroup.getName());
     }
+
+    @Test
+    public void negativeCreateGroupTest()
+    {
+
+        Response response = RestAssured
+                .given()
+                .param("asdasd","Asdasd")
+                .auth().basic("admin", "admin")
+                .contentType(ContentType.JSON)
+                .redirects().follow(true)
+                .post(this.URl);
+
+        response.then().statusCode(500);
+    }
 }
